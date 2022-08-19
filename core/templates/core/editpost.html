@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %} {% load static %} {% block content %}
+
+<form action="{% url 'updatepost' id %}" method="POST" >
+  {% csrf_token %}
+  <div class="container my-5">
+      {% for field in form %}
+    <div class="row my-3">
+      <div class="col-md-6 offset-md-3">
+        <p>
+          {{field.label_tag}} {{field}}
+          <span class="error">{{field.errors|striptags}}</span>
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="col-md-6 offset-md-3">
+      <input type="submit" class="btn btn-success" value="Update" />
+      <a href="" type="reset" class="btn btn-warning">Reset</a>
+      <a href="{% url 'dashboard' %}" class="btn btn-danger">Cancel</a>
+    </div>
+
+    {% if form.non_field_errors %} {% for error in form.non_field_errors %}
+    <p class="error">{{error}}</p>
+    {% endfor %} {% endif %}
+  </div>
+</form>
+{% endblock content %}

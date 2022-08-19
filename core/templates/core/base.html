@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Blogs</title>
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}" />
+  </head>
+  <body>
+    <div class="container-fluid black-bor nav-bar sticky-top">
+      <div class="row">
+        <div class="col-md-8 blue-bor d-flex align-items-center links">
+          <ul class="nav-ul red-bor d-inline-block my-0">
+            <li class="mx-3"><a href="{% url 'home' %}">Home</a></li>
+
+            {% if request.user.is_authenticated %}
+
+            <li class="mx-3"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="mx-3"><a href="{% url 'user_logout' %}">Log Out</a></li>
+            <li class="mx-3"><a href="{% url 'user_changepass' %}">Change Password</a></li>
+            {% else %}
+
+            <li class="mx-3"><a href="{% url 'user_signup' %}">Sign Up</a></li>
+            <li class="mx-3"><a href="{% url 'user_login' %}">Log In</a></li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <div class="col-md-4 blue-bor d-flex align-items-center search">
+          <div id="search-div" class="d-flex align-items-center red-bor">
+            <form action="" method="get">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Search Any Blog Here"
+              />
+              <a href="" type="submit"
+                ><i class="fa-solid fa-magnifying-glass fa-xl mx-1"></i
+              ></a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% block content %}{% endblock content %}
+
+    <script src="{% static 'core/js/jquery.js' %}"></script>
+    <script src="{% static 'core/js/popper.js' %}"></script>
+    <script src="{% static 'core/js/fontawesome.js' %}"></script>
+    <script src="{% static 'core/js/bootstrap.js' %}"></script>
+    <script
+      src="https://kit.fontawesome.com/e87d9214d1.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

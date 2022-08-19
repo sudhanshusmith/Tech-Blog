@@ -1,0 +1,91 @@
+{% extends 'core/base.html' %} {% load static %} 
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="container my-3">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+<div class="container my-4">
+  <div class="row">
+
+    <div class="col-md-2 blue-bor">
+      <div class="text-center"><i class="fa-solid fa-user fa-4x"></i>
+        <h3>{{name}}</h3>
+        <form action="{% url 'newpost' %}" method="get" class="my-4">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-success" value="Add Post">
+        </form>
+      </div>
+      
+    </div>
+
+    <div class="col-md-10 blue-bor">
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr class="table-secondary">
+              <th class="text-center">ID</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th class="text-center">Edit</th>
+              <th class="text-center">Delete</th>
+            </tr>
+          </thead>
+  
+          <tbody>
+            {% for post in all_post %}
+            <tr>
+              <td class="text-center">{{post.id}}</td>
+              <td>{{post.title}}</td>
+              <td>{{post.description}}</td>
+              <td class="text-center">
+                <form action="{% url 'editpost' post.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn">
+                    <a href=""><i class="fa-solid fa-user-pen edit"></i></a>
+                  </button></form> 
+              </td>
+  
+              <td class="text-center">
+                {% if perms.core.delete_blog %}
+
+                <form action="{% url 'confirm_del' post.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa-solid fa-trash delete"></i>
+                  </button>
+                </form>
+
+                {% else %}
+                No Access
+
+                {% endif %}
+              </td>
+            </tr>
+            
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 blue-bor confirm_del p-4">
+      <h5 class="mt-3">Are You Sure Want to delete it ??</h5>
+      <small class="error">Note: This Action can't be undone</small>
+      <form action="{% url 'deletepost' id %}" method="POSt" class="mt-4 mb-2">
+        {% csrf_token %}
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
